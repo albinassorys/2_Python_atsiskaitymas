@@ -206,18 +206,17 @@ def borrow_book(id):
     book.available = False
     db.session.commit()
     flash('Book borrowed successfully', 'success')
-    return render_template('available_books.html')
+    return redirect(url_for('available_books'))
 
 
 @app.route('/return_book/<int:id>', methods=['GET', 'POST'])
 def return_book(id):
-    user = Book.query.filter_by(id=id).first()
     book = Book.query.filter_by(id=id).first()
     book.available = True
-    user.user = None
+    book.user = None
     db.session.commit()
     flash('Book returned successfully', 'success')
-    return render_template('my_books.html')
+    return redirect(url_for('my_books'))
 
 
 @app.route('/sign_out')
