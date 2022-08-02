@@ -199,6 +199,7 @@ def sign_in():
 
 
 @app.route('/borrow_book/<int:id>', methods=['GET', 'POST'])
+@login_required
 def borrow_book(id):
     book = Book.query.filter_by(id=id).first()
     book.user = current_user
@@ -208,12 +209,12 @@ def borrow_book(id):
     return render_template('available_books.html')
 
 
-@app.route('/return_book/<int:id>', methods=['GET', 'DELETE', 'POST'])
+@app.route('/return_book/<int:id>', methods=['GET', 'POST'])
 def return_book(id):
     user = Book.query.filter_by(id=id).first()
     book = Book.query.filter_by(id=id).first()
     book.available = True
-    db.session.delete(user.user)
+    user.user = None
     db.session.commit()
     flash('Book returned successfully', 'success')
     return render_template('my_books.html')
