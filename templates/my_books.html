@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">My Books</th>
+    </tr>
+    </thead>
+    {% for row in data %}
+    <tbody>
+    <tr class="table-success">
+        <th scope="row">{{ row.id }}</th>
+        <td>{{ row.title }}</td>
+        <td>{{ row.author }}</td>
+        <td><a class="btn btn-primary" href="/return_book/{{row.id}}">Return</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
